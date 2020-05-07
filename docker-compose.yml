@@ -1,0 +1,8 @@
+version: "3"
+
+services:
+    bot:
+        build: .
+        environment:
+            ACCOUNT: 123456789
+            PASSWORD: 987654321
