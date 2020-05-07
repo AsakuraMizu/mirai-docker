@@ -3,8 +3,9 @@ version: "3"
 services:
     bot:
         build: .
+        restart: unless-stopped
         ports:
-            - 8080:8080
+            - 8080:8080         # 对外暴露的端口号 : Mirai API HTTP 配置文件中的端口号
         environment:
-            ACCOUNT: 123456789
-            PASSWORD: 987654321
+            ACCOUNT: 123456789  # Bot 的 QQ 账号
+            PASSWORD: 987654321 # Bot 的 QQ 密码
