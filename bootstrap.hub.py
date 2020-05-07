@@ -87,18 +87,18 @@ async def fetch_wrapper(version):
 
 async def fetch_console(version):
     return await fetch(
-        f'https://pan.jasonczc.cn/?/mirai/mirai-console/mirai-console-{version}.mp4',
+        f'https://raw.githubusercontent.com/mamoe/mirai-repo/master/shadow/mirai-console/mirai-console-{version}.jar',
         os.path.join(CONTENT_DIR, f'mirai-console-{version}.jar'))
 
 async def fetch_core(version):
     return await fetch(
-        f'https://pan.jasonczc.cn/?/mirai/mirai-core-qqandroid/mirai-core-qqandroid-{version}.mp4',
+        f'https://raw.githubusercontent.com/mamoe/mirai-repo/master/shadow/mirai-core-qqandroid/mirai-core-qqandroid-{version}.jar',
         os.path.join(CONTENT_DIR, f'mirai-core-qqandroid-jvm-{version}.jar'))
 
 
 async def fetch_plugin(plugin, version):
     return await fetch(
-        f'https://pan.jasonczc.cn/?/mirai/plugins/{plugin}/{plugin}-{version}.mp4',
+        f'https://raw.githubusercontent.com/mamoe/mirai-plugins/master/{plugin}/{plugin}-{version}.jar',
         os.path.join(PLUGIN_DIR, f'{plugin}-{version}.jar'))
 
 

@@ -5,7 +5,7 @@ services:
         image: asakuram/mirai
         restart: unless-stopped
         volumes:
-            - ./MiraiAPIHTTP.yml:/app/plugins/MiraiAPIHTTP/setting.yml
+            - ./device.json:/app/device.json
         ports:
             - 8080:8080                                     # 对外暴露的端口号 : Mirai API HTTP 配置的端口号（即下文第14行所配置的）
         environment:
