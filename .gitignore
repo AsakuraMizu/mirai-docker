@@ -137,6 +137,6 @@ dmypy.json
 
 # ----- Mirai -----
 
-mirai-console-wrapper.jar
+mirai-console-wrapper-*.jar
 /content
 /plugins

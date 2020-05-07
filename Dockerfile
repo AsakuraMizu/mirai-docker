@@ -1,24 +1,15 @@
-FROM python:alpine AS build
-
-WORKDIR /mirai
-
-ADD requirements.txt .
-RUN pip config set global.index-url https://pypi.tuna.tsinghua.edu.cn/simple
-RUN pip install -r requirements.txt
-
-ADD . /mirai
-RUN python bootstrap.py
-
-
-
-FROM java:alpine
+FROM alpine
 
 WORKDIR /app
 
-COPY --from=build /mirai/plugins /app/plugins
-COPY --from=build /mirai/content /app/content
-COPY --from=build /mirai/mirai-console-wrapper-*.jar /app
-ADD MiraiAPIHTTP.yml plugins/MiraiAPIHTTP/setting.yml
-RUN echo Pure > /app/content/.wrapper.txt
+RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.tuna.tsinghua.edu.cn/g' /etc/apk/repositories && \
+    apk add --no-cache python3 openjdk8-jre
 
-CMD java -Dmirai.account=$ACCOUNT -Dmirai.password=$PASSWORD -jar mirai-console-wrapper-*.jar --update KEEP
+ADD . /app
+RUN pip3 config set global.index-url https://pypi.tuna.tsinghua.edu.cn/simple && \
+    pip3 install -r requirements.txt && \
+    python3 bootstrap.py && \
+    echo Pure > /app/content/.wrapper.txt
+
+CMD python3 bootstrap.py && \
+    java -Dmirai.account=$MIRAI_ACCOUNT -Dmirai.password=$MIRAI_PASSWORD -jar mirai-console-wrapper-*.jar --update KEEP

@@ -2,10 +2,16 @@ version: "3"
 
 services:
     bot:
-        build: .
+        image: asakuram/mirai
         restart: unless-stopped
+        volumes:
+            - ./MiraiAPIHTTP.yml:/app/plugins/MiraiAPIHTTP/setting.yml
         ports:
-            - 8080:8080         # 对外暴露的端口号 : Mirai API HTTP 配置文件中的端口号
+            - 8080:8080                                     # 对外暴露的端口号 : Mirai API HTTP 配置的端口号（即下文第14行所配置的）
         environment:
-            ACCOUNT: 123456789  # Bot 的 QQ 账号
-            PASSWORD: 987654321 # Bot 的 QQ 密码
+            MIRAI_ACCOUNT: 123456789                        # Bot 的 QQ 账号
+            MIRAI_PASSWORD: 987654321                       # Bot 的 QQ 密码
+            MIRAI_HTTP_PORT: 8080                           # （可选）Mirai API HTTP 的端口号，默认为 8080
+            MIRAI_HTTP_AUTHKEY: REPLACE_IT                  # Mirai API HTTP 的 authKey
+            MIRAI_HTTP_USE_REPORT: "true"                   # （可选）是否启用详细上报，默认为 true
+            MIRAI_HTTP_REPORT_URL: http://172.17.0.1:5000/  # （可选）上报地址，默认为 http://172.17.0.1:5000/
