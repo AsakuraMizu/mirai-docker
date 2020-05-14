@@ -2,5 +2,5 @@
     "wrapper": "1.1.0",
     "console": "0.5.1",
     "core-qqandroid": "1.0-RC",
-    "mirai-api-http": "1.6.5"
+    "mirai-api-http": "1.7.0"
 }
