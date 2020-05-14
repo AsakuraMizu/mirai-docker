@@ -38,7 +38,7 @@ async def gen_conf():
     conf = {}
     conf['port'] = getenv('port', 8080)
     conf['authKey'] = getenv('authkey', 'PLEASE_REPLACE_IT')
-    if getenv('use_report', True):
+    if strtobool(getenv('use_report', 'true')):
         conf['report'] = {}
         conf['report']['enable'] = True
         conf['report']['groupMessage'] = {'report': True}
@@ -48,7 +48,7 @@ async def gen_conf():
         conf['report']['destinations'] = [
             getenv('report_url', 'http://172.17.0.1:5000/')
         ]
-    makedirs('plugins/MiraiAPIHTTP')
+    makedirs(CONFIG_DIR)
     async with aiofiles.open(CONFIG_FILE, 'w') as f:
         await f.write(yaml.dump(conf))
 
