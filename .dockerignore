@@ -1,3 +1,13 @@
+.vscode
+.idea
+
 .gitignore
 .git
+.github
+
 venv
+
+device.json
+docker-compose.yml
+
+README.md

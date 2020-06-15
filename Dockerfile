@@ -2,13 +2,14 @@ FROM alpine
 
 WORKDIR /app
 
-RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.tuna.tsinghua.edu.cn/g' /etc/apk/repositories && \
-    apk add --no-cache python3 openjdk8-jre
+RUN apk add --no-cache tzdata python3 py3-pip openjdk8-jre && \
+    ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
+
+ADD requirements.txt /app
+RUN pip3 install -r requirements.txt
 
 ADD . /app
-RUN pip3 config set global.index-url https://pypi.tuna.tsinghua.edu.cn/simple && \
-    pip3 install -r requirements.txt && \
-    python3 bootstrap.py && \
+RUN python3 bootstrap.py && \
     echo Pure > /app/content/.wrapper.txt
 
 CMD python3 bootstrap.py && \

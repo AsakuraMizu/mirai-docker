@@ -57,7 +57,7 @@ async def fetch(url, name):
     if pathlib.Path(name).exists():
         tqdm.tqdm.write(f'{name} already exists.')
         return True
-    async with httpx.AsyncClient() as client:
+    async with httpx.AsyncClient(timeout=None) as client:
         async with client.stream('GET', url, timeout=None) as stream:
             try:
                 stream.raise_for_status()
@@ -80,26 +80,27 @@ async def fetch(url, name):
 
 async def fetch_wrapper(version):
     return await fetch(
-        'https://github.com/mamoe/mirai-console/releases/download/' \
-        f'wrapper-{version}/mirai-console-wrapper-{version}.jar',
-        os.path.join(MIRAI_DIR, f'mirai-console-wrapper-{version}.jar'))
+        'https://github.com/mamoe/mirai-console-wrapper/releases/download/'
+        f'{version}/mirai-console-wrapper-{version}-all.jar',
+        os.path.join(MIRAI_DIR, f'mirai-console-wrapper-{version}-all.jar'))
 
 
-async def fetch_console(version):
+async def fetch_content(name, version):
     return await fetch(
-        f'https://pan.jasonczc.cn/?/mirai/mirai-console/mirai-console-{version}.mp4',
-        os.path.join(CONTENT_DIR, f'mirai-console-{version}.jar'))
+        f'https://mamoe.github.io/mirai-repo/shadow/mirai-{name}/mirai-{name}-{version}.jar',
+        os.path.join(CONTENT_DIR, f'mirai-{name}-{version}.jar'))
 
-async def fetch_core(version):
+
+# async def fetch_plugin(plugin, version):
+#     return await fetch(
+#         f'https://raw.githubusercontent.com/mamoe/mirai-plugins/master/{plugin}/{plugin}-{version}.jar',
+#         os.path.join(PLUGIN_DIR, f'{plugin}-{version}.jar'))
+
+
+async def fetch_api_http(version):
     return await fetch(
-        f'https://pan.jasonczc.cn/?/mirai/mirai-core-qqandroid/mirai-core-qqandroid-{version}.mp4',
-        os.path.join(CONTENT_DIR, f'mirai-core-qqandroid-jvm-{version}.jar'))
-
-
-async def fetch_plugin(plugin, version):
-    return await fetch(
-        f'https://pan.jasonczc.cn/?/mirai/plugins/{plugin}/{plugin}-{version}.mp4',
-        os.path.join(PLUGIN_DIR, f'{plugin}-{version}.jar'))
+        f'https://github.com/mamoe/mirai-api-http/releases/download/v{version}/mirai-api-http-v{version}.jar',
+        os.path.join(PLUGIN_DIR, f'mirai-api-http-v{version}.jar'))
 
 
 async def init():
@@ -112,9 +113,10 @@ async def init():
 
     coros = [
         fetch_wrapper(VER['wrapper']),
-        fetch_console(VER['console']),
-        fetch_core(VER['core-qqandroid']),
-        fetch_plugin('mirai-api-http', VER['mirai-api-http'])
+        fetch_content('console', VER['console']),
+        fetch_content('core-qqandroid', VER['core-qqandroid']),
+        # fetch_plugin(VER['api-http']),
+        fetch_api_http(VER['api-http'])
     ]
     res = await asyncio.gather(*coros)
     if not all(res):

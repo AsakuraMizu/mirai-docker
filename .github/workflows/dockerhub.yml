@@ -23,6 +23,6 @@ jobs:
         username: asakuram
         password: ${{ secrets.hubtoken }}
         tag_with_ref: true
-        dockerfile: Dockerfile.hub
+        dockerfile: Dockerfile
 
   
