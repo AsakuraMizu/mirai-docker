@@ -80,26 +80,26 @@ async def fetch(url, name):
 
 async def fetch_wrapper(version):
     return await fetch(
-        'https://github.com/mamoe/mirai-console-wrapper/releases/download/'
+        'https://github.com/project-mirai/mirai-console-wrapper/releases/download/'
         f'{version}/mirai-console-wrapper-{version}-all.jar',
         os.path.join(MIRAI_DIR, f'mirai-console-wrapper-{version}-all.jar'))
 
 
 async def fetch_content(name, version):
     return await fetch(
-        f'https://mamoe.github.io/mirai-repo/shadow/mirai-{name}/mirai-{name}-{version}.jar',
+        f'https://project-mirai.github.io/mirai-repo/shadow/mirai-{name}/mirai-{name}-{version}.jar',
         os.path.join(CONTENT_DIR, f'mirai-{name}-{version}.jar'))
 
 
 # async def fetch_plugin(plugin, version):
 #     return await fetch(
-#         f'https://raw.githubusercontent.com/mamoe/mirai-plugins/master/{plugin}/{plugin}-{version}.jar',
+#         f'https://raw.githubusercontent.com/project-mirai/mirai-plugins/master/{plugin}/{plugin}-{version}.jar',
 #         os.path.join(PLUGIN_DIR, f'{plugin}-{version}.jar'))
 
 
 async def fetch_api_http(version):
     return await fetch(
-        f'https://github.com/mamoe/mirai-api-http/releases/download/v{version}/mirai-api-http-v{version}.jar',
+        f'https://github.com/project-mirai/mirai-api-http/releases/download/v{version}/mirai-api-http-v{version}.jar',
         os.path.join(PLUGIN_DIR, f'mirai-api-http-v{version}.jar'))
 
 
